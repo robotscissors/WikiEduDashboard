@@ -6,11 +6,13 @@
 // Polyfills
 import "babel-polyfill";
 import Rails from 'rails-ujs';
+import jQuery from 'jquery';
 require('location-origin');
 require('trix'); // Trix WYSIWYG editor, used for editing Timeline content
 Rails.start(); // Enables rails-ujs, which adds JavaScript enhancement to some Rails views
 
-$(() => {
+jQuery(() => {
+  window.$ = jQuery;
   window.I18n = require('i18n-js');
   window.List = require('list.js'); // List is used for sorting tables outside of React
   require('./utils/course.js'); // This adds jquery features for some views outside of React
