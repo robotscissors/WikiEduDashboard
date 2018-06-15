@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_dependency "#{Rails.root}/lib/analytics/campaign_csv_builder"
+require_dependency "#{Rails.root}/lib/analytics/campaign_edits_csv_builder"
 require_dependency "#{Rails.root}/lib/analytics/ores_diff_csv_builder"
 
 #= Controller for campaign data
@@ -180,7 +181,7 @@ class CampaignsController < ApplicationController
     filename = "#{@campaign.slug}-edits-#{Time.zone.today}.csv"
     respond_to do |format|
       format.csv do
-        send_data CampaignCsvBuilder.new(@campaign).articles_to_csv,
+        send_data CampaignEditsCsvBuilder.new(@campaign).generate_csv,
                   filename: filename
       end
     end
