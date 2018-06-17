@@ -12,7 +12,7 @@ class CampaignEditsCsvBuilder
   def generate_csv
     csv_data = [CSV_HEADERS]
     @campaign.courses.each do |course|
-      binding.pry
+      @course = course
       course.all_revisions.includes(:wiki, :article, :user).each do |revision|
         csv_data << row(revision)
       end
@@ -24,6 +24,8 @@ class CampaignEditsCsvBuilder
 
   CSV_HEADERS = %w[
     revision_id
+    campaign
+    course
     timestamp
     wiki
     article_title
@@ -35,6 +37,8 @@ class CampaignEditsCsvBuilder
   ].freeze
   def row(revision)
     row = [revision.mw_rev_id]
+    row << @campaign.title
+    row << @course.title
     row << revision.date
     row << revision.wiki.base_url
     row << revision.article.full_title
